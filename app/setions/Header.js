@@ -39,11 +39,11 @@ const styles = StyleSheet.create({
     headStyle: {
         paddingTop: 30,
         paddingRight: 10,
-        backgroundColor: 'black',
+        backgroundColor: '#35605a',
         flex: 1,
         flexDirection: 'row',
         borderBottomWidth: 2,
-        borderColor: 'green'
+        borderColor: 'black'
     },
     logoStyle: {
         flex: 1,

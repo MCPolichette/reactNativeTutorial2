@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableHighlight, Alert } from 'react-native';
-import { Header } from '../setions/Header';
+import { Header } from '../sections/Header';
 import { StackNavigator } from 'react-navigation';
 
 export class Contact extends React.Component {
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     buttons: {
         marginTop: 15,
         fontSize: 16,
-        backgroundColor: 'teal',
+        backgroundColor: 'powderblue',
         padding: 5,
         borderWidth: 2,
         borderColor: 'blue'

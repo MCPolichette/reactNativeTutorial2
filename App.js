@@ -2,6 +2,7 @@ import React from 'react';
 // import { StyleSheet, Text, View } from 'react-native';
 import { Home } from './app/views/Home';
 import { Contact } from './app/views/Contact';
+import { Video } from './app/views/Video';
 import { createAppContainer, createStackNavigator } from 'react-navigation';
 
 const MyRoutes = createStackNavigator(
@@ -12,7 +13,9 @@ const MyRoutes = createStackNavigator(
     ContactRT: {
       screen: Contact
     },
-
+    LessonRT: {
+      screen: Video
+    }
   },
   { initialRouteName: 'HomeRT' }
 );

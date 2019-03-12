@@ -1,14 +1,12 @@
 import React from 'react';
-import { Text, View, FlagList, Image, TouchableWithoutFeedback } from 'react-native';
-import { releaseCapture } from 'react-native-view-shot';
-import console = require('console');
-import { FlatList } from 'react-native-gesture-handler';
+import { Text, View, FlatList, Image, TouchableWithoutFeedback } from 'react-native';
 
 export class Video extends React.Component {
 
     static navigationOptions = {
         header: null
     };
+
     constructor(props) {
         super(props);
         this.state = { listLoaded: false };
@@ -20,17 +18,16 @@ export class Video extends React.Component {
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
-
                     listLoaded: true,
                     videoList: Array.from(responseJson.items)
                 })
-
             })
             .catch((error) => {
                 console.error(error);
-            })
+            });
     }
     render() {
+        const { navigate } = this.props.navigate
         return (
             <View>
                 {this.state.listLoaded && (
@@ -40,6 +37,7 @@ export class Video extends React.Component {
                             data={this.state.videoList}
                             renderItem={({ item }) =>
                                 <TubeItem
+                                    navigate={navigate}
                                     id={item.id.videoId}
                                     title={item.snippet.title}
                                     imageSrc={itmem.snippet.thumbnails.high.url}
@@ -60,23 +58,25 @@ export class Video extends React.Component {
     }
 }
 export class TubeItem extends React.Component {
+
     onPress = () => {
-        console.log(this.props.id);
+        this.props.navigate('"VideoDetailRT', { ytubeId: this.props.id });
 
     };
+
     render() {
-        <TouchableWithoutFeedback onPress={this.onPress}>
-            <View stype={{ paddingTop: 20, alignItems: 'center' }}>
-                <Image
-                    style={{ width: '100%', height: 200 }}
-                    source={{ uri: this.props.imageSrc }}
-                />
-                <Text >
-                    {this.props.title}
-                </Text>
-
-            </View>
-
-        </TouchableWithoutFeedback>
+        return (
+            <TouchableWithoutFeedback onPress={this.onPress}>
+                <View stype={{ paddingTop: 20, alignItems: 'center' }}>
+                    <Image
+                        style={{ width: '100%', height: 200 }}
+                        source={{ uri: this.props.imageSrc }}
+                    />
+                    <Text >
+                        {this.props.title}
+                    </Text>
+                </View>
+            </TouchableWithoutFeedback>
+        );
     }
 }

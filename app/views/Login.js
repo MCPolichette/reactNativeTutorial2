@@ -5,56 +5,65 @@ import {
     View,
     TextInput,
     TouchableHighlight,
-    Alert, AsyncStorage
+    Alert,
+    AsyncStorage
 } from 'react-native';
 
-export class Register extends React.Component {
-
+export class Login extends React.Component {
     static navigationOptions = {
         header: null
     };
-
     constructor(props) {
         super(props);
         this.state = {
             username: '',
             passwrd: '',
-            passwrdConfirm: ''
         };
     };
-
-    cancelRegister = () => {
-        Alert.alert('Registration cancelled');
-        this.props.navigation.navigate('HomeRT');
+    cancelLogin = () => {
+        Alert.alert('Login cancelled');
+        this.props.navigation.navigate(HomeRT);
     };
-
-    registerAccount = () => {
+    loginUser = () => {
         if (!this.state.username) {
             Alert.alert('Please enter a username')
         }
-        else if (this.state.passwrd !== this.state.passwrdConfirm) {
-            Alert.alert('Passwords do not match')
+        else if (!this.state.passwrd) {
+            Alert.alert('Please Enter a Password')
         }
         else {
-            AsyncStorage.getItem(this.state.username, (err, result) => {
-                if (result !== null) {
-                    Alert.alert(`${this.state.username} already exists`);
+            AsyncStorage.getItem('userLoggedIn', (err, result) => {
+                if (result !== 'none') {
+                    Alert.alert('Someone is already logged on');
+                    this.props.navigation.navigate('HomeRT');
                 }
                 else {
-                    AsyncStorage.setItem(this.state.username, this.state.passwrd, (err, result) => {
-                        Alert.alert(`${this.state.username} account created`);
-                        this.props.navigation.navigate('HomeRT');
-                    });
+                    AsyncStorage.getItem(this.state.username, (err, result) => {
+                        if (result !== null) {
+                            if (result !== this.state.passwrd) {
+                                Alert.alert("PASSWORD IS WRONG")
+
+                            }
+                            else {
+                                AsyncStorage.setItem('userLoggedIn', this.state.username, (err, result) => {
+                                    Alert.alert(`${this.state.username} Logged in`);
+                                    this.props.navigation.navigate("HomeRT")
+                                });
+                            }
+                        }
+                        else {
+                            Alert.alert(`No account for ${this.state.username} `);
+                        }
+                    })
                 }
             });
         }
-
     }
 
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.heading}>Register Account</Text>
+                <Text style={styles.heading}>Login</Text>
 
                 <TextInput
                     style={styles.inputs}
@@ -71,24 +80,16 @@ export class Register extends React.Component {
                 />
                 <Text style={styles.labels}>Enter Password</Text>
 
-                <TextInput
-                    style={styles.inputs}
-                    onChangeText={(text) => this.setState({ passwrdConfirm: text })}
-                    value={this.state.passwrdConfirm}
-                    secureTextEntry={true}
-                />
-                <Text style={styles.labels}>Confirm Password</Text>
-
-                <TouchableHighlight onPress={this.registerAccount} underlayColor='#31e981'>
+                <TouchableHighlight onPress={this.loginUser} underlayColor='#31e981'>
                     <Text style={styles.buttons}>
-                        Register
-                    </Text>
+                        Log in
+                            </Text>
                 </TouchableHighlight>
 
-                <TouchableHighlight onPress={this.cancelRegister} underlayColor='#31e981'>
+                <TouchableHighlight onPress={this.cancelLogin} underlayColor='#31e981'>
                     <Text style={styles.buttons}>
                         Cancel
-                    </Text>
+                            </Text>
                 </TouchableHighlight>
             </View>
         )

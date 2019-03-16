@@ -9,6 +9,8 @@ import { Video } from './app/views/Video';
 import { VideoDetail } from './app/views/VideoDetail';
 import { Register } from './app/views/Register';
 import { Login } from './app/views/Login';
+import { Blog } from './app/views/Blog';
+import {BlogDetail} from './app/views/BlogDetail'
 
 const MyRoutes = createStackNavigator(
   {
@@ -29,7 +31,13 @@ const MyRoutes = createStackNavigator(
     },
     LoginRT: {
       screen: Login
-    }
+    },
+     BlogRT: {
+      screen: Blog
+    },
+    BlogDetailRT: {
+     screen: BlogDetail
+   }
   },
   { initialRouteName: 'HomeRT' }
 );

@@ -2,8 +2,6 @@ import React from 'react';
 import { Text, View, FlatList, Image, TouchableWithoutFeedback } from 'react-native';
 import keys from '../keys.json'
 
-
-
 export class Video extends React.Component {
 
     static navigationOptions = {

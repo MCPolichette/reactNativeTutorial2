@@ -1,65 +1,67 @@
 import React from 'react';
-import {
-    StyleSheet,
-    Text,
-    View,
-    TextInput,
-    TouchableHighlight,
-    Alert,
-    AsyncStorage
-} from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableHighlight, Alert, AsyncStorage } from 'react-native';
 
 export class Login extends React.Component {
     static navigationOptions = {
         header: null
     };
+
     constructor(props) {
         super(props);
         this.state = {
             username: '',
-            passwrd: '',
+            passwrd: ''
         };
     };
+
     cancelLogin = () => {
         Alert.alert('Login cancelled');
-        this.props.navigation.navigate(HomeRT);
+        this.props.navigation.navigate('HomeRT');
     };
+
     loginUser = () => {
+
         if (!this.state.username) {
             Alert.alert('Please enter a username')
         }
         else if (!this.state.passwrd) {
-            Alert.alert('Please Enter a Password')
+            Alert.alert('Please enter a password')
         }
-        else {
-            AsyncStorage.getItem('userLoggedIn', (err, result) => {
-                if (result !== 'none') {
-                    Alert.alert('Someone is already logged on');
-                    this.props.navigation.navigate('HomeRT');
-                }
-                else {
-                    AsyncStorage.getItem(this.state.username, (err, result) => {
-                        if (result !== null) {
-                            if (result !== this.state.passwrd) {
-                                Alert.alert("PASSWORD IS WRONG")
+        else AsyncStorage.getItem('userLoggedIn', (err, result) => {
 
-                            }
-                            else {
-                                AsyncStorage.setItem('userLoggedIn', this.state.username, (err, result) => {
-                                    Alert.alert(`${this.state.username} Logged in`);
-                                    this.props.navigation.navigate("HomeRT")
-                                });
-                            }
+            if (result !== 'none') {
+                Alert.alert('Someone is already logged on');
+                this.props.navigation.navigate('HomeRT');
+            }
+            else {
+
+                AsyncStorage.getItem(this.state.username, (err, result) => {
+
+                    if (result !== null) {
+
+                        if (result !== this.state.passwrd) {
+                            Alert.alert('Password Incorrect')
                         }
                         else {
-                            Alert.alert(`No account for ${this.state.username} `);
+                            AsyncStorage.setItem('userLoggedIn', this.state.username, (err, result) => {
+                                Alert.alert(`${this.state.username} Logged in`);
+                                this.props.navigation.navigate('HomeRT');
+                            });
                         }
-                    })
-                }
-            });
-        }
-    }
+                    }
+                    else {
+                        Alert.alert(`No account for ${this.state.username}`)
+                    }
+                })
+            }
 
+
+
+        });
+
+
+
+    }
     render() {
         return (
             <View style={styles.container}>
@@ -82,18 +84,21 @@ export class Login extends React.Component {
 
                 <TouchableHighlight onPress={this.loginUser} underlayColor='#31e981'>
                     <Text style={styles.buttons}>
-                        Log in
-                            </Text>
+                        Login
+                    </Text>
                 </TouchableHighlight>
 
                 <TouchableHighlight onPress={this.cancelLogin} underlayColor='#31e981'>
                     <Text style={styles.buttons}>
                         Cancel
-                            </Text>
+                    </Text>
                 </TouchableHighlight>
+
+
             </View>
-        )
+        );
     }
+
 }
 
 const styles = StyleSheet.create({

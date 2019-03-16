@@ -1,5 +1,8 @@
 import React from 'react';
 import { Text, View, FlatList, Image, TouchableWithoutFeedback } from 'react-native';
+import keys from '../keys.json'
+
+
 
 export class Video extends React.Component {
 
@@ -13,7 +16,8 @@ export class Video extends React.Component {
     }
 
     componentDidMount() {
-        return fetch('https://www.googleapis.com/youtube/v3/search?part=snippet&q=pluralsight&type=video&key=AIzaSyD7tiLmyM47EkLb80n2NGpgZYMvZ3xFziU')
+        const TubeAPI = keys.YoutubeAPI
+        return fetch('https://www.googleapis.com/youtube/v3/search?part=snippet&q=pluralsight&type=video&key=' + TubeAPI)
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({

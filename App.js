@@ -5,12 +5,17 @@ import { createAppContainer, createStackNavigator } from 'react-navigation';
 
 import { Home } from './app/views/Home';
 import { Contact } from './app/views/Contact';
+
 import { Video } from './app/views/Video';
 import { VideoDetail } from './app/views/VideoDetail';
+
 import { Register } from './app/views/Register';
 import { Login } from './app/views/Login';
+
 import { Blog } from './app/views/Blog';
-import {BlogDetail} from './app/views/BlogDetail'
+import { BlogDetail } from './app/views/BlogDetail';
+
+import { About } from './app/views/About';
 
 const MyRoutes = createStackNavigator(
   {
@@ -32,12 +37,16 @@ const MyRoutes = createStackNavigator(
     LoginRT: {
       screen: Login
     },
-     BlogRT: {
+    BlogRT: {
       screen: Blog
     },
     BlogDetailRT: {
-     screen: BlogDetail
-   }
+      screen: BlogDetail
+    },
+    AboutRT: {
+      screen: About
+    }
+
   },
   { initialRouteName: 'HomeRT' }
 );

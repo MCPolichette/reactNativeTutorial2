@@ -15,6 +15,7 @@ export class BlogDetail extends React.Component {
         return fetch(`https://public-api.wordpress.com/rest/v1.1/sites/nativetutorial2.wordpress.com/posts/${blogId}`)
             .then((response) => response.json())
             .then((responseJson) => {
+                console.log(responseJson)
                 this.setState({
                     postLoaded: true,
                     postTitle: responseJson.title,
